@@ -328,7 +328,7 @@ extension ViewController: PlayerListener {
 
     func onTimeChanged(_ event: TimeChangedEvent) {
         print("onTimeChanged \(event.currentTime) \(self.player?.duration ?? 0)")
-        if (event.currentTime > (self.player?.duration ?? 0) - (self.configuration!["nextPlayback"] as! Double) && !nextCallback) {
+        if (self.configuration!["nextPlayback"] != nil && event.currentTime > (self.player?.duration ?? 0) - (self.configuration!["nextPlayback"] as! Double) && !nextCallback) {
             if((self.onEvent) != nil) {
                 nextCallback = true;
                 self.onEvent!(["message": "next"])
