@@ -13,6 +13,7 @@ final class ViewController: UIView {
     @objc var autoPlay: Bool = false
     @objc var hasZoom: Bool = false
     @objc var deviceZoom: Bool = false
+    @objc var systemUi: Bool = false
     @objc var configuration: NSDictionary? = nil
     @objc var analytics: NSDictionary? = nil
 
@@ -131,6 +132,10 @@ final class ViewController: UIView {
         }
 
         config.styleConfiguration.userInterfaceConfiguration = bitmovinUserInterfaceConfiguration
+        
+        if(self.systemUi) {
+            config.styleConfiguration.userInterfaceType = .system
+        }
 
         // Create player based on player configuration
         player = Player(configuration: config)

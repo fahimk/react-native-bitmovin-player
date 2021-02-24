@@ -1,10 +1,11 @@
-import { requireNativeComponent, NativeModules } from 'react-native';
 import React from 'react';
+import { NativeModules, requireNativeComponent } from 'react-native';
 
 type ReactNativeBitmovinPlayerType = {
   autoPlay: boolean;
   hasZoom: boolean;
   deviceZoom: boolean;
+  systemUi: boolean;
   style?: any;
   onLoad?: (event: any) => void;
   onPlaying?: (event: any) => void;
@@ -64,6 +65,7 @@ export default ({
   autoPlay,
   hasZoom,
   deviceZoom,
+  systemUi,
   style,
   onLoad,
   onPlaying,
@@ -82,6 +84,7 @@ export default ({
         autoPlay,
         hasZoom,
         deviceZoom,
+        systemUi,
         onLoad,
         onPlaying,
         onPause,
