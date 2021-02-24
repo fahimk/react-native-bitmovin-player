@@ -9,9 +9,12 @@ target 'ReactNativeBitmovinPlayerExample' do
 
   use_react_native!(:path => config["reactNativePath"])
 
-      pod 'takeoffmedia-react-native-bitmovin-player', :path => '../..'
+  pod 'takeoffmedia-react-native-bitmovin-player', :path => '../..'
 
-      pod 'BitmovinPlayer', '2.57.1'
+  pod 'BitmovinAnalyticsCollector/Core', git: 'https://github.com/bitmovin/bitmovin-analytics-collector-ios.git', tag: '1.18.1'
+  pod 'BitmovinAnalyticsCollector/BitmovinPlayer', git: 'https://github.com/bitmovin/bitmovin-analytics-collector-ios.git', tag: '1.18.1'
+  pod 'BitmovinPlayer', git: 'https://github.com/bitmovin/bitmovin-player-ios-sdk-cocoapod.git', tag: '2.57.1'
+
   # Enables Flipper.
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and
