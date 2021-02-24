@@ -1,4 +1,7 @@
 PODS:
+  - BitmovinAnalyticsCollector/BitmovinPlayer (1.18.1):
+    - BitmovinPlayer (~> 2.51)
+  - BitmovinAnalyticsCollector/Core (1.18.1)
   - BitmovinPlayer (2.57.1)
   - boost-for-react-native (1.63.0)
   - CocoaAsyncSocket (7.6.4)
@@ -297,7 +300,9 @@ PODS:
     - React-Core (= 0.63.4)
     - React-cxxreact (= 0.63.4)
     - React-jsi (= 0.63.4)
-  - takeoffmedia-react-native-bitmovin-player (0.1.9):
+  - takeoffmedia-react-native-bitmovin-player (0.1.26):
+    - BitmovinAnalyticsCollector/BitmovinPlayer (= 1.18.1)
+    - BitmovinAnalyticsCollector/Core (= 1.18.1)
     - BitmovinPlayer (= 2.57.1)
     - React-Core
   - Yoga (1.14.0)
@@ -305,7 +310,9 @@ PODS:
     - Yoga (~> 1.14)
 
 DEPENDENCIES:
-  - BitmovinPlayer (= 2.57.1)
+  - BitmovinAnalyticsCollector/BitmovinPlayer (from `https://github.com/bitmovin/bitmovin-analytics-collector-ios.git`, tag `1.18.1`)
+  - BitmovinAnalyticsCollector/Core (from `https://github.com/bitmovin/bitmovin-analytics-collector-ios.git`, tag `1.18.1`)
+  - BitmovinPlayer (from `https://github.com/bitmovin/bitmovin-player-ios-sdk-cocoapod.git`, tag `2.57.1`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/Libraries/FBReactNativeSpec`)
@@ -356,8 +363,6 @@ DEPENDENCIES:
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  https://github.com/bitmovin/cocoapod-specs.git:
-    - BitmovinPlayer
   trunk:
     - boost-for-react-native
     - CocoaAsyncSocket
@@ -373,6 +378,12 @@ SPEC REPOS:
     - YogaKit
 
 EXTERNAL SOURCES:
+  BitmovinAnalyticsCollector:
+    :git: https://github.com/bitmovin/bitmovin-analytics-collector-ios.git
+    :tag: 1.18.1
+  BitmovinPlayer:
+    :git: https://github.com/bitmovin/bitmovin-player-ios-sdk-cocoapod.git
+    :tag: 2.57.1
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   FBLazyVector:
@@ -428,8 +439,17 @@ EXTERNAL SOURCES:
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
+CHECKOUT OPTIONS:
+  BitmovinAnalyticsCollector:
+    :git: https://github.com/bitmovin/bitmovin-analytics-collector-ios.git
+    :tag: 1.18.1
+  BitmovinPlayer:
+    :git: https://github.com/bitmovin/bitmovin-player-ios-sdk-cocoapod.git
+    :tag: 2.57.1
+
 SPEC CHECKSUMS:
-  BitmovinPlayer: 89a8773615a63e71f04bb24d0d0b647a92e374b3
+  BitmovinAnalyticsCollector: 09a199bf3fe48c88cb8518ad471674440d0af7a2
+  BitmovinPlayer: 920bb78c5adaeb94b344c4472819dd298551a195
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
   CocoaLibEvent: 2fab71b8bd46dd33ddb959f7928ec5909f838e3f
@@ -466,10 +486,10 @@ SPEC CHECKSUMS:
   React-RCTText: 5c51df3f08cb9dedc6e790161195d12bac06101c
   React-RCTVibration: ae4f914cfe8de7d4de95ae1ea6cc8f6315d73d9d
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
-  takeoffmedia-react-native-bitmovin-player: 7367048cfd38fba623f5dbe5201c1a34de7dc4d5
+  takeoffmedia-react-native-bitmovin-player: bebfcd5deda1f90ada686486e233d07141440328
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 07129971598d0ce2dbf90da79b401c7b01fcecf5
+PODFILE CHECKSUM: 27063efd92b17b260540608b400bb355e5eef63b
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1
