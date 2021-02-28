@@ -1,5 +1,6 @@
 package com.takeoffmediareactnativebitmovinplayer
 
+import android.util.Log
 import com.bitmovin.player.BitmovinPlayerView
 import com.bitmovin.player.cast.BitmovinCastManager
 import com.bitmovin.player.config.PlayerConfiguration
@@ -17,6 +18,7 @@ class ReactNativeBitmovinPlayer : SimpleViewManager<BitmovinPlayerView>(), Lifec
 
   override fun createViewInstance(reactContext: ThemedReactContext): BitmovinPlayerView {
     context = reactContext
+    context.addLifecycleEventListener(this)
 
     val playerConfiguration = PlayerConfiguration()
     playerConfiguration.playbackConfiguration?.autoplayEnabled = false
@@ -34,6 +36,7 @@ class ReactNativeBitmovinPlayer : SimpleViewManager<BitmovinPlayerView>(), Lifec
   }
 
   override fun onDropViewInstance(view: BitmovinPlayerView) {
+    context.removeLifecycleEventListener(this)
     this.playerView.onDestroy()
     super.onDropViewInstance(view)
   }
@@ -47,7 +50,9 @@ class ReactNativeBitmovinPlayer : SimpleViewManager<BitmovinPlayerView>(), Lifec
   }
 
   override fun onHostPause() {
+    Log.i("bitmoviin", "pause")
     this.playerView.onPause()
+    this.playerView.player?.pause()
   }
 
   override fun onHostDestroy() {
