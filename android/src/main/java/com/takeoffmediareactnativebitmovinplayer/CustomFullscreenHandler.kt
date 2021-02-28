@@ -1,5 +1,6 @@
 package com.takeoffmediareactnativebitmovinplayer
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
@@ -16,6 +17,7 @@ class CustomFullscreenHandler(
     val context = playerView.context;
     val intent = Intent(context, FullScreenActivity::class.java)
     intent.putExtra("sourceItem", playerView.player?.config?.sourceItem)
+
     context.startActivity(intent);
   }
 

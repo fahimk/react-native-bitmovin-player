@@ -15,6 +15,7 @@ import com.facebook.react.uimanager.annotations.ReactProp
 class ReactNativeBitmovinPlayer : SimpleViewManager<BitmovinPlayerView>(), LifecycleEventListener {
   private lateinit var context: ThemedReactContext
   private lateinit var playerView: BitmovinPlayerView
+  private var wasPlayingOnPause = false
 
   override fun createViewInstance(reactContext: ThemedReactContext): BitmovinPlayerView {
     context = reactContext
@@ -47,12 +48,22 @@ class ReactNativeBitmovinPlayer : SimpleViewManager<BitmovinPlayerView>(), Lifec
 
   override fun onHostResume() {
     this.playerView.onResume()
+    if(wasPlayingOnPause) {
+      this.playerView.player?.play()
+    }
   }
 
   override fun onHostPause() {
     Log.i("bitmoviin", "pause")
     this.playerView.onPause()
-    this.playerView.player?.pause()
+
+    if(this.playerView.player?.isPlaying == true) {
+      wasPlayingOnPause = true
+      this.playerView.player?.pause()
+    }
+    else {
+      wasPlayingOnPause = false
+    }
   }
 
   override fun onHostDestroy() {
