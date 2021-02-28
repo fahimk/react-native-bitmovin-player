@@ -1,6 +1,9 @@
 package com.takeoffmediareactnativebitmovinplayer
 
+import android.content.pm.PackageManager
 import android.util.Log
+import com.bitmovin.analytics.BitmovinAnalyticsConfig
+import com.bitmovin.analytics.bitmovin.player.BitmovinPlayerCollector
 import com.bitmovin.player.BitmovinPlayerView
 import com.bitmovin.player.cast.BitmovinCastManager
 import com.bitmovin.player.config.PlayerConfiguration
@@ -15,22 +18,29 @@ import com.facebook.react.uimanager.annotations.ReactProp
 class ReactNativeBitmovinPlayer : SimpleViewManager<BitmovinPlayerView>(), LifecycleEventListener {
   private lateinit var context: ThemedReactContext
   private lateinit var playerView: BitmovinPlayerView
+  private lateinit var analyticsCollector: BitmovinPlayerCollector
   private var wasPlayingOnPause = false
 
   override fun createViewInstance(reactContext: ThemedReactContext): BitmovinPlayerView {
-    context = reactContext
-    context.addLifecycleEventListener(this)
+    this.context = reactContext
+    this.context.addLifecycleEventListener(this)
 
     val playerConfiguration = PlayerConfiguration()
     playerConfiguration.playbackConfiguration?.autoplayEnabled = false
     this.playerView = BitmovinPlayerView(this.context, playerConfiguration)
 
+    // analytics
+    val app = context.packageManager.getApplicationInfo(context.packageName, PackageManager.GET_META_DATA)
+    val bundle = app.metaData
+    val bitmovinAnalyticsConfig = BitmovinAnalyticsConfig(bundle.getString("BITMOVIN_ANALYTICS_LICENSE_KEY"))
+    this.analyticsCollector = BitmovinPlayerCollector(bitmovinAnalyticsConfig, this.context)
+    analyticsCollector.attachPlayer(this.playerView.player);
 
-    // Instantiate a custom FullscreenHandler
+    // full screen
     val customFullscreenHandler = CustomFullscreenHandler(this.playerView)
-    // Set the FullscreenHandler to the BitmovinPlayerView
     this.playerView.setFullscreenHandler(customFullscreenHandler)
 
+    // casting
     BitmovinCastManager.getInstance().updateContext(reactContext)
 
     return this.playerView;
@@ -38,6 +48,7 @@ class ReactNativeBitmovinPlayer : SimpleViewManager<BitmovinPlayerView>(), Lifec
 
   override fun onDropViewInstance(view: BitmovinPlayerView) {
     context.removeLifecycleEventListener(this)
+    analyticsCollector.detachPlayer()
     this.playerView.onDestroy()
     super.onDropViewInstance(view)
   }

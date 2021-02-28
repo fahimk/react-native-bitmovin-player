@@ -135,4 +135,5 @@ dependencies {
   api 'com.facebook.react:react-native:+'
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
   implementation 'com.bitmovin.player:playercore:2.62.0'
+  implementation 'com.bitmovin.analytics:collector-bitmovin-player:1.9.0'
 }
