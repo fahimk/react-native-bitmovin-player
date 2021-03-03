@@ -133,12 +133,8 @@ final class ViewController: UIView {
 
         config.styleConfiguration.userInterfaceConfiguration = bitmovinUserInterfaceConfiguration
         
-         if(self.systemUi == true) {
-            print("Using system ui")
-            config.styleConfiguration.userInterfaceType = .system
-        } else {
-            print("not using system ui")
-        }
+        // TODO: use systemUI variable, seems to be set after init, but we need the interface type set here
+        config.styleConfiguration.userInterfaceType = .system
 
         // Create player based on player configuration
         player = Player(configuration: config)
