@@ -23,17 +23,22 @@ class ReactNativeBitmovinPlayer: RCTViewManager {
     func play() -> Void {
         playerView?.play()
     }
-    
+
     @objc(pause)
     func pause() -> Void {
         playerView?.pause()
     }
-    
+
+    @objc(destroy)
+    func destroy() -> Void {
+        playerView?.destroy()
+    }
+
     @objc(seekBackwardCommand)
     func seekBackwardCommand() -> Void {
         playerView?.seekBackwardCommand()
     }
-    
+
     @objc(seekForwardCommand)
     func seekForwardCommand() -> Void {
         playerView?.seekForwardCommand()

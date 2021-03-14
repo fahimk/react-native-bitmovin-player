@@ -82,11 +82,12 @@ final class ViewController: UIView {
             config.styleConfiguration.scalingMode = BMPScalingMode.zoom;
         }
 
+        if (self.autoPlay == true){
+            config.playbackConfiguration.isAutoplayEnabled = true;
+        }
+
         player?.setup(configuration: config)
         nextCallback = false;
-        if (self.autoPlay == true){
-            player?.play()
-        }
 
         if(self.analytics != nil) {
             var plistDictionary: NSDictionary?
@@ -149,7 +150,7 @@ final class ViewController: UIView {
         playerView.frame = frame
 
         playerView.add(listener: self)
-        
+
         // Make sure that the correct audio session category is set to allow for background playback.
         handleAudioSessionCategorySetting()
 
@@ -160,6 +161,7 @@ final class ViewController: UIView {
     @objc var onPlaying:RCTDirectEventBlock? = nil
     @objc var onPause:RCTDirectEventBlock? = nil
     @objc var onEvent:RCTDirectEventBlock? = nil
+    @objc var onError:RCTDirectEventBlock? = nil
     @objc var onSeek:RCTDirectEventBlock? = nil
     @objc var onForward:RCTDirectEventBlock? = nil
     @objc var onRewind:RCTDirectEventBlock? = nil
@@ -221,8 +223,13 @@ final class ViewController: UIView {
             player?.pause()
         }
     }
-    
-    
+
+    func destroy() -> Void {
+        DispatchQueue.main.async { [unowned self] in
+            player?.destroy()
+        }
+    }
+
     func handleAudioSessionCategorySetting() {
         let audioSession = AVAudioSession.sharedInstance()
 
@@ -245,7 +252,17 @@ extension ViewController: CustomMessageHandlerDelegate {
 
         if (message == "closePlayer") {
             DispatchQueue.main.async { [unowned self] in
-                player?.pause()
+                player?.destroy()
+                // Detach your player when you are done.
+                if (analyticsCollector != nil) {
+                    analyticsCollector!.detachPlayer()
+                }
+            }
+        }
+
+        if (message == "nextEpisode") {
+            DispatchQueue.main.async { [unowned self] in
+                player?.destroy()
                 // Detach your player when you are done.
                 if (analyticsCollector != nil) {
                     analyticsCollector!.detachPlayer()
@@ -353,5 +370,8 @@ extension ViewController: PlayerListener {
 
     func onError(_ event: ErrorEvent) {
         print("onError \(event.message)")
+        if((self.onError) != nil) {
+            self.onError!(["message": event.message, "volume": self.player?.volume as Any, "duration": self.player?.duration as Any])
+        }
     }
 }
