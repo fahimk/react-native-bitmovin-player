@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import com.bitmovin.player.BitmovinPlayerView
 import com.bitmovin.player.ui.FullscreenHandler
-class CustomFullscreenHandler(
+class MyEmbedHandler(
   private val playerView: BitmovinPlayerView
 ) : FullscreenHandler {
 

@@ -37,7 +37,7 @@ class ReactNativeBitmovinPlayer : SimpleViewManager<BitmovinPlayerView>(), Lifec
     analyticsCollector.attachPlayer(this.playerView.player);
 
     // full screen
-    val customFullscreenHandler = CustomFullscreenHandler(this.playerView)
+    val customFullscreenHandler = MyEmbedHandler(this.playerView)
     this.playerView.setFullscreenHandler(customFullscreenHandler)
 
     // casting

@@ -8,13 +8,11 @@ import com.bitmovin.analytics.BitmovinAnalyticsConfig
 import com.bitmovin.analytics.bitmovin.player.BitmovinPlayerCollector
 import com.bitmovin.player.BitmovinPlayer
 import com.bitmovin.player.BitmovinPlayerView
-import com.bitmovin.player.cast.BitmovinCastManager
 import com.bitmovin.player.config.PlayerConfiguration
 import com.bitmovin.player.config.media.SourceItem
-import com.bitmovin.player.ui.FullscreenHandler
 import kotlinx.android.synthetic.main.activity_full_screen.*
 
-class FullScreenActivity : AppCompatActivity(), FullscreenHandler {
+class FullScreenActivity : AppCompatActivity() {
 
   private lateinit var bitmovinPlayer: BitmovinPlayer
   private lateinit var bitmovinPlayerView: BitmovinPlayerView
@@ -30,7 +28,8 @@ class FullScreenActivity : AppCompatActivity(), FullscreenHandler {
     this.bitmovinPlayerView = BitmovinPlayerView(this, playerConfiguration)
     this.bitmovinPlayer = this.bitmovinPlayerView.player!!
     this.bitmovinPlayer.load(intent.getParcelableExtra<SourceItem>("sourceItem"))
-    this.bitmovinPlayerView.setFullscreenHandler(this)
+    val customFullscreenHandler = MyFullscreenHandler(this.bitmovinPlayerView)
+    this.bitmovinPlayerView.setFullscreenHandler(customFullscreenHandler)
     this.bitmovinPlayerView.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
     root.addView(this.bitmovinPlayerView, 0)
 
@@ -47,26 +46,14 @@ class FullScreenActivity : AppCompatActivity(), FullscreenHandler {
     this.bitmovinPlayerView.onStart()
   }
 
-  override fun onFullscreenRequested() {
-    this.finish()
-  }
-
-  override fun onFullscreenExitRequested() {
-    this.finish()
-  }
-
-  override fun isFullScreen(): Boolean {
-    return true
-  }
-
   override fun onResume() {
     super.onResume()
-    this.bitmovinPlayerView.onResume()
+    this.bitmovinPlayerView.onResume();
   }
 
   override fun onPause() {
-    this.bitmovinPlayerView.onPause()
     super.onPause()
+    this.bitmovinPlayerView.onPause();
   }
 
   override fun onStop() {
